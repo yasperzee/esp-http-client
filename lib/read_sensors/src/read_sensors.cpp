@@ -154,6 +154,10 @@ Values ReadSensors::ReadUltrasonicSensor() {
   Serial.print("Distance (cm): ");
   Serial.println(distanceCm);
   Serial.println();
+  Serial.println("Light ON");
+  // Timer here or is delay good enought?
+  Serial.println("Light OFF");
+
   //Serial.print("Distance (inch): ");
   //Serial.println(distanceInch);
   
