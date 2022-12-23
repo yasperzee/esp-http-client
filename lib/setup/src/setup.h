@@ -30,9 +30,6 @@
 #define SENSOR_MODEL_STR "HC-SR04" // e.g. Olimex SNS-IR-3-8
 
 
-
-
-
 //************ Node Settings ************
   
   // Tachometer settings

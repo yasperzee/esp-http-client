@@ -57,12 +57,7 @@ extern void do_setup();
 //#include "ArduinoJson.h"
 //#endif
 
-
-
-
-
-
-//#define SERVER_IP "192.168.0.158"
+//#define SERVER_IP "192.168.0.158" // LiLo
 String  server_ip = "192.168.0.164"; // ThinkPad
 void setup() {
   do_setup();
@@ -74,32 +69,36 @@ void loop() {
 
 if (WiFi.status() == WL_CONNECTED) { //Check WiFi connection status
 
-WiFiClient client;
+WiFiClient WiFi_client;
 //ESP8266WebClient client(HTTP_REST_PORT);
 
-HTTPClient http;  //Declare an object of class HTTPClient
+HTTPClient http_client;  //Declare an object of class HTTPClient
 
-String serverName = "http://192.168.0.164:8082/node-data";
+//String serverName = "http://192.168.0.164:8082/node-data";
+String serverName = "http://192.168.0.164:8082/index.html";
 
 
-//http.begin(client, serverPath.c_str());
 
-http.begin(client,serverName.c_str());  //Specify request destination	
-//http.begin(client,"http://jsonplaceholder.typicode.com/users/1");
+http_client.begin(WiFi_client,serverName.c_str());  //Specify request destination	
 
-http.addHeader("Content-Type", "text/json", false,true);
+http_client.addHeader("Content-Type", "text/json", false,true);
 
-int httpCode = http.GET();                                  //Send the request
-//int httpCode = http.POST("{\"hello\":\"world\"}");
+//int httpCode = http_client.GET();                                  //Send the request
+int httpCode = http_client.POST("{\"TEMPERATURE\":\"some_temp_value\"}");
+//int httpCode2 = http_client.POST("{\"HUMIDITY\":\"some_humid_value\"}");
+//int httpCode = http_client.POST("{\"hello\":\"world\"}");
 Serial.print("httpCode: ");
 Serial.println(httpCode);
+//Serial.print("httpCode2: ");
+//Serial.println(httpCode2);
 
 if (httpCode > 0) { //Check the returning code
-  String payload = http.getString();   //Get the request response payload
+  String payload = http_client.getString();   //Get the request response payload
+  Serial.println("payload:    "); 
   Serial.println(payload);             //Print the response payload     
   }
 
-http.end(); 
+http_client.end(); 
 }
 delay(5000);   
   } // loop
